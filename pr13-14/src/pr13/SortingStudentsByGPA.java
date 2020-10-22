@@ -14,7 +14,7 @@ public class SortingStudentsByGPA implements Comparator<Student> {
         pivot = numbers[left];
         while (left < right) // пока границы не сомкнутся
         {
-            while (compare(numbers[right],pivot)==1 ||(compare(numbers[right],pivot)==0)&& (left < right))
+            while (compare(numbers[right],pivot)<0 ||(compare(numbers[right],pivot)==0)&& (left < right))
                 right--; // сдвигаем правую границу пока элемент [right] больше [pivot]
             if (left != right) // если границы не сомкнулись
             {
@@ -23,7 +23,7 @@ public class SortingStudentsByGPA implements Comparator<Student> {
                 numbers[right] = tmp;
                 left++; // сдвигаем левую границу вправо
             }
-            while (compare(numbers[left],pivot)==-1 ||(compare(numbers[left],pivot)==0) && (left < right))
+            while (compare(numbers[left],pivot)>0 ||(compare(numbers[left],pivot)==0) && (left < right))
                 left++; // сдвигаем левую границу пока элемент [left] меньше [pivot]
             if (left != right) // если границы не сомкнулись
             {
@@ -44,14 +44,13 @@ public class SortingStudentsByGPA implements Comparator<Student> {
             quickSort(numbers, pivot1 + 1, right);
     }
 
-
-    void mergeSort1(Student[] a, int l, int r)
+    void mergeSort(Student[] a, int l, int r)
     {
         if (l == r) return; // границы сомкнулись
         int mid = (l + r) / 2; // определяем середину последовательности
         // и рекурсивно вызываем функцию сортировки для каждой половины
-        mergeSort1(a, l, mid);
-        mergeSort1(a, mid + 1, r);
+        mergeSort(a, l, mid);
+        mergeSort(a, mid + 1, r);
         int i = l;  // начало первого пути
         int j = mid + 1; // начало второго пути
         Student[] tmp = new Student[r+1]; //Arrays.copyOf(a, a.length); // дополнительный массив
@@ -59,8 +58,8 @@ public class SortingStudentsByGPA implements Comparator<Student> {
         {
             // записываем в формируемую последовательность меньший из элементов двух путей
             // или остаток первого пути если j > r
-            if ((j > r) || ((i <= mid) && gg(a[i],a[j]))) //(Integer.parseInt(a[i].getSum()) < Integer.parseInt(a[j].getSum())))) //Boolean.parseBoolean(Integer.toString(compare(a[i],a[j])))))
-           {
+            if ((j > r) || ((i <= mid) && compare(a[i],a[j])>0))
+            {
                 tmp[step] = a[i];
                 i++;
             }
@@ -73,39 +72,6 @@ public class SortingStudentsByGPA implements Comparator<Student> {
         // переписываем сформированную последовательность в исходный массив
         for (int step = 0; step < r - l + 1; step++)
             a[l + step] = tmp[step];
-    }
-
-
-
-    public void mergeSort(Student[] a, int lo, int hi) {
-        if (hi <= lo)
-            return;
-        int mid = lo + (hi - lo) / 2;
-        mergeSort(a, lo, mid);
-        mergeSort(a, mid + 1, hi);
-
-        Student[] buf = Arrays.copyOf(a, a.length);
-
-        for (int k = lo; k <= hi; k++)
-            buf[k] = a[k];
-
-        int i = lo, j = mid + 1;
-        for (int k = lo; k <= hi; k++) {
-
-            if (i > mid) {
-                a[k] = buf[j];
-                j++;
-            } else if (j > hi) {
-                a[k] = buf[i];
-                i++;
-            } else if (compare(buf[j],buf[i])==-1) {
-                a[k] = buf[j];
-                j++;
-            } else {
-                a[k] = buf[i];
-                i++;
-            }
-        }
     }
 
     public boolean gg(Student a, Student b){
