@@ -103,6 +103,10 @@ public class App {
             menu1.add(b1);
             JMenuItem b2 = new JMenuItem("open");
             menu1.add(b2);
+            JMenuItem b3 = new JMenuItem("save");
+            menu1.add(b3);
+            JMenuItem b4 = new JMenuItem("exit");
+            menu1.add(b4);
             menuBar.add(menu1);
             setJMenuBar(menuBar);
 
@@ -122,6 +126,17 @@ public class App {
                     panel.add(text);
                     revalidate();
                     repaint();
+                }
+            });
+            b3.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+
+                }
+            });
+
+            b4.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+
                 }
             });
         }
